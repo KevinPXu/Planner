@@ -12,17 +12,22 @@ function addCurrentDate() {
 
 function createTextArea() {
   for (var [i, mHour] of Object.entries(mHours)) {
+    //variables for new elements in HTML
     var newDivEl = $("<div>");
     var textAreaEl = $("<textarea>");
     var buttonEl = $("<button>");
     var timeBlockEl = $("<span>");
+    // A container element to store Textarea, text block, and save button
     newDivEl.addClass("row");
     containerEl.append(newDivEl);
+    //creating text block with bootstrap styling
     timeBlockEl.addClass("col-xl-1 time-block hour");
     timeBlockEl.text(hours[i]);
     newDivEl.append(timeBlockEl);
+    //creating text area with classes with the military time, bootstrap, and the current hour explicitly written
     textAreaEl.addClass(mHour + " col-xl-10 " + hours[i]);
     newDivEl.append(textAreaEl);
+    //creating the buttons with bootstrap elements
     buttonEl.addClass("btn btn-primary saveBtn col-xl-1");
     newDivEl.append(buttonEl);
     buttonEl.on("click", function (event) {
@@ -58,34 +63,39 @@ function renderFromLocalStorage() {
   for (var hour of Object.keys(schedule)) {
     $("textarea." + hour).text(schedule[hour]);
   }
-  timeOfDay();
 }
 
-function timeOfDay() {
+setTimeColor();
+function setTimeColor() {
+  var temp;
   for (var [i, mHour] of Object.entries(mHours)) {
-    if (
-      containerEl.children().children("textarea").attr("class").split(" ")[
-        mHour
-      ] < moment().hour()
-    ) {
+    temp = containerEl.children().eq(i).children().eq(1).attr("class");
+    temp = temp.split(" ");
+
+    if (moment().hour() > temp[0]) {
       containerEl
         .children()
-        .children("textarea")
+        .eq(i)
+        .children()
+        .eq(1)
         .attr("class", mHour + " col-xl-10 " + hours[i] + " past");
-    } else if (
-      containerEl.children().children("textarea").attr("class").split(" ")[
-        mHour
-      ] > moment().hour()
-    ) {
+    } else if (moment().hour() < temp[0]) {
       containerEl
         .children()
-        .children("textarea")
+        .eq(i)
+        .children()
+        .eq(1)
         .attr("class", mHour + " col-xl-10 " + hours[i] + " future");
     } else {
       containerEl
         .children()
-        .children("textarea")
-        .attr("class", mHour + " col-xl-10 " + hours[i] + " future");
+        .eq(i)
+        .children()
+        .eq(1)
+        .attr("class", mHour + " col-xl-10 " + hours[i] + " present");
     }
+    temp = "";
   }
 }
+var test = containerEl.children().eq(1).children().eq(1).attr("class");
+console.log(test.split());
