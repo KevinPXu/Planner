@@ -26,53 +26,40 @@ This project was used to teach myself how to properly utilize third-party API's 
 
 ## Description
 
+A simple planner for a single day that displays the current day. When you click on a text area, you are able to type in a task and save using the blue save button. The text will stay even after refresh. The color of the text areas will change dynamically depending on the current hour and will tell you if the hour is passed. (\*Note the demonstration above was recorded outside of typical business hours).
+
 ## Code Snippet
 
-### Functions to dynamically create the questions and to clear the questions when a choice is clicked
+### Functions to dynamically create the text block, text area, and the save button inline using DOM traversal via Jquery and bootstrap to style the page.
 
 ```JavaScript
-function setQuestion(question) {
-  setQuestionText(question.questionText);
-  setQuestionChoices(question.answerChoices);
-}
-
-function setQuestionText(questionText) {
-  document.getElementById("question").textContent = questionText;
-}
-
-function setQuestionChoices(answerChoices) {
-  answerChoicesEl.innerHTML = " ";
-  for (var i in answerChoices) {
-    var ansChoice = document.createElement("button");
-    ansChoice.addEventListener("click", function (event) {
-      answerClicked(event.target);
+function createTextArea() {
+  for (var [i, mHour] of Object.entries(mHours)) {
+    //variables for new elements in HTML
+    var newDivEl = $("<div>");
+    var textAreaEl = $("<textarea>");
+    var buttonEl = $("<button>");
+    var timeBlockEl = $("<span>");
+    // A container element to store Textarea, text block, and save button
+    newDivEl.addClass("row");
+    containerEl.append(newDivEl);
+    //creating text block with bootstrap styling
+    timeBlockEl.addClass("col-xl-1 time-block hour");
+    timeBlockEl.text(hours[i]);
+    newDivEl.append(timeBlockEl);
+    //creating text area with classes with the military time, bootstrap, and the current hour explicitly written
+    textAreaEl.addClass(mHour + " col-xl-10 " + hours[i]);
+    newDivEl.append(textAreaEl);
+    //creating the buttons with bootstrap elements
+    buttonEl.addClass("btn btn-primary saveBtn col-xl-1");
+    newDivEl.append(buttonEl);
+    buttonEl.on("click", function (event) {
+      var input = $(event.target).siblings().next().val();
+      var hour = $(event.target).siblings().next().attr("class").split(" ")[0];
+      saveText(input, hour);
     });
-    var ansChoiceCont = document.createTextNode(answerChoices[i]);
-    ansChoice.appendChild(ansChoiceCont);
-    answerChoicesEl.appendChild(ansChoice);
   }
-}
-```
-
-### Function to show and store the highscores
-
-```JavaScript
-function storeHighscore(initials) {
-  highscores.push({
-    initials,
-    score: mainTimer,
-  });
-  highscores.sort((a, b) => b.score - a.score);
-  localStorage.setItem("highscores", JSON.stringify(highscores));
-}
-
-function renderHighscore() {
-  highscoreListEl.innerHTML = "";
-  for (var highscore of highscores) {
-    var li = document.createElement("li");
-    li.textContent = highscore.initials + ": " + highscore.score;
-    highscoreListEl.appendChild(li);
-  }
+  renderFromLocalStorage();
 }
 ```
 
