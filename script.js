@@ -108,4 +108,3 @@ function setTimeColor() {
     temp = "";
   }
 }
-var test = containerEl.children().eq(1).children().eq(1).attr("class");
