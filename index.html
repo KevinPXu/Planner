@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Links to import bootstrap, fontawesome, and google fonts used for the website -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -24,12 +25,15 @@
 
   <body>
     <header class="jumbotron">
+      <!-- Title of the page in the header -->
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
+      <!-- Paragraph used to place dynamically updating date -->
       <p id="currentDay" class="lead"></p>
     </header>
+    <!-- container used to dynamically add contents of the planner -->
     <div class="container"></div>
-
+    <!-- imports of the Jquery and moment.js libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="script.js"></script>
