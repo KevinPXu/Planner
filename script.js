@@ -2,6 +2,8 @@ var currentDayEl = $("#currentDay");
 var containerEl = $(".container");
 var mHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 var hours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
+
+//function calls to create the page, set colors of the planner, the current date at the top of the page, and initialize the local storage to empty object.
 initLocalStorage();
 addCurrentDate();
 createTextArea();
