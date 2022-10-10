@@ -1,4 +1,4 @@
-# Timed-Coding-Quiz
+# Planner
 
 ## Technologies Used
 
